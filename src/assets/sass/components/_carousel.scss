@@ -1,0 +1,40 @@
+.carousel {
+    &__icon {
+        transition: all 0.5s ease;
+        opacity: 0;
+    }
+    .is-hover &__icon {
+        opacity: 1;
+    }
+
+    &__slide {
+        padding: 1px;
+    }
+
+    &__pagination {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        padding: 0;
+        transform: translateX(-50%);
+
+        &-button {
+            padding: 2px !important;
+            &::after {
+                width: 4px !important;
+                height: 4px !important;
+                border-radius: 5px !important;
+                border: 1px solid white;
+                background-color: transparent !important;
+            }
+            &--active::after {
+                background-color: white !important;
+            }
+        }
+    }
+
+    &__track {
+        direction: ltr;
+        margin-top: 0;
+    }
+}

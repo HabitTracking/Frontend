@@ -1,0 +1,6 @@
+@use '../base/typography' as *;
+
+.Toastify__toast-body {
+    font: $font_body2;
+    direction: rtl;
+}

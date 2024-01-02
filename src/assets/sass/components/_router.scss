@@ -1,0 +1,5 @@
+@use '../utils/variables' as *;
+
+.router-link-active svg {
+    fill: $bgLightSelected;
+}

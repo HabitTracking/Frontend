@@ -1,0 +1,22 @@
+@use '../utils/variables' as *;
+@use '../utils/themes' as *;
+@use '../base/typography' as *;
+@use '../utils/mixins' as *;
+
+.search-input {
+    @include flex(flex-start, center, 24px);
+    position: relative;
+    margin: 20px 0px 30px;
+
+    &__input {
+        padding: 6px 40px 6px 12px;
+        font: $font_body2;
+        border: 0.2px solid $primary200;
+        box-shadow: $shadow;
+        background: $primary100;
+        border-radius: 16px;
+    }
+    &__icon {
+        @include absolute(10px, 10px);
+    }
+}

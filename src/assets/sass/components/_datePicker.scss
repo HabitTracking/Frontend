@@ -1,0 +1,15 @@
+@use '@/assets/sass/utils/variables';
+@use '@/assets/sass/base/typography';
+
+.vpd-main {
+    position: absolute;
+}
+
+.date-picker {
+    font: typography.$font_body1;
+    color: variables.$gray900;
+}
+
+.vpd-actions button {
+    font: typography.$font_body1 !important;
+}
