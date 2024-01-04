@@ -33,6 +33,7 @@ export const login = async body => {
 
 export const signup = async body => {
     try {
+        console.log(body);
         const response = await instance.post(`/signup`, body);
         toast.success('ثبت نام با موفقیت انجام شد');
         return response;

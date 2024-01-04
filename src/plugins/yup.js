@@ -6,8 +6,8 @@ export const schemaLogin = Yup.object().shape({
 });
 
 export const schemaSignup = Yup.object().shape({
-    firstName: Yup.string().required('نام خود را وارد کنید'),
-    lastName: Yup.string().required('نام خانوادگی خود را وارد کنید'),
+    firstname: Yup.string().required('نام خود را وارد کنید'),
+    lastname: Yup.string().required('نام خانوادگی خود را وارد کنید'),
     email: Yup.string().email('ایمیل معتبر نیست').required('ایمیل را وارد کنید'),
     password: Yup.string()
         .required('رمز عبور را وارد نمایید')

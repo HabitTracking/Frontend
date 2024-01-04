@@ -30,13 +30,13 @@ export const signupForm = {
     inputs: [
         {
             label: 'نام',
-            name: 'firstName',
+            name: 'firstname',
             type: 'text',
             headingIcon: 'iconPerson'
         },
         {
             label: 'نام خانوادگی',
-            name: 'lastName',
+            name: 'lastname',
             type: 'text',
             headingIcon: 'iconPerson'
         },
