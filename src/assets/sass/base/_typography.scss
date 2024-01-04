@@ -1,54 +1,50 @@
 @font-face {
-    font-family: 'yekanbakh';
+    font-family: 'iranyekan';
     font-weight: 400;
-    src: url('@/assets/fonts/woff/YekanBakh-Regular.woff') format('woff'),
-        url('@/assets/fonts/woff2/Yekanbakh-Regular.woff2') format('woff2');
+    src: url('@/assets/fonts/woff2/regular.woff2') format('woff2');
     font-style: normal;
-    font-display: swap
+    font-display: swap;
 }
 
 @font-face {
-    font-family: 'yekanbakh';
+    font-family: 'iranyekan';
     font-weight: 600;
-    src: url('@/assets/fonts/woff/Yekanbakh-SemiBold.woff') format('woff'),
-        url('@/assets/fonts/woff2/Yekanbakh-SemiBold.woff2') format('woff2');
+    src: url('@/assets/fonts/woff2/medium.woff2') format('woff2');
     font-style: normal;
-    font-display: swap
+    font-display: swap;
 }
 
 @font-face {
-    font-family: 'yekanbakh';
+    font-family: 'iranyekan';
     font-weight: 700;
-    src: url('@/assets/fonts/woff/Yekanbakh-Bold.woff') format('woff'),
-        url('@/assets/fonts/woff2/Yekanbakh-Bold.woff2') format('woff2');
+    src: url('@/assets/fonts/woff2/bold.woff2') format('woff2');
     font-style: normal;
-    font-display: swap
+    font-display: swap;
 }
 
 @font-face {
-    font-family: 'yekanbakh';
+    font-family: 'iranyekan';
     font-weight: 900;
-    src: url('@/assets/fonts/woff/Yekanbakh-Black.woff') format('woff'),
-        url('@/assets/fonts/woff2/Yekanbakh-Black.woff2') format('woff2');
+    src: url('@/assets/fonts/woff2/black.woff2') format('woff2');
     font-style: normal;
-    font-display: swap
+    font-display: swap;
 }
 
-$font_h1: 900 48px/76px 'yekanbakh';
-$font_h2: 700 42px/64px 'yekanbakh';
-$font_h3: 700 32px/52px 'yekanbakh';
-$font_h4: 900 28px/44px 'yekanbakh';
-$font_h5: 600 20px/36px 'yekanbakh';
-$font_h6: 700 18px/32px 'yekanbakh';
+$font_h1: 900 48px/76px 'iranyekan';
+$font_h2: 700 42px/64px 'iranyekan';
+$font_h3: 700 32px/52px 'iranyekan';
+$font_h4: 900 28px/44px 'iranyekan';
+$font_h5: 600 20px/36px 'iranyekan';
+$font_h6: 700 18px/32px 'iranyekan';
 
-$font_subtitle1: 600 16px/28px 'yekanbakh';
-$font_subtitle2: 600 14px/28px 'yekanbakh';
+$font_subtitle1: 600 16px/28px 'iranyekan';
+$font_subtitle2: 600 14px/28px 'iranyekan';
 
-$font_body1: 400 16px/32px 'yekanbakh';
-$font_body2: 400 14px/28px 'yekanbakh';
+$font_body1: 400 16px/32px 'iranyekan';
+$font_body2: 400 14px/28px 'iranyekan';
 
-$font_button1: 600 16px/32px 'yekanbakh';
-$font_button2: 400 14px/32px 'yekanbakh';
+$font_button1: 600 16px/32px 'iranyekan';
+$font_button2: 400 14px/32px 'iranyekan';
 
-$font_caption: 400 12px/16px 'yekanbakh';
-$font_overline: 400 10px/12px 'yekanbakh';
+$font_caption: 400 12px/16px 'iranyekan';
+$font_overline: 400 10px/12px 'iranyekan';

@@ -10,9 +10,7 @@ const instance = axios.create({ baseURL: BASE_URL });
 
 instance.interceptors.request.use(
     config => {
-        config.headers['gateway-system'] = 'intern_5';
-        config.headers['gateway-token'] = cookies.get('token') ?? '';
-
+        config.headers['token'] = cookies.get('token') ?? '';
         return config;
     },
     error => {

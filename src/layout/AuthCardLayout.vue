@@ -10,7 +10,10 @@
 
 <style scoped lang="scss">
 .auth-card {
-    background: variables.$bgLightdefault;
+    background: url(../assets/images/bg.jpg);
+    background-position: center;
+    // background-color: ;
+    mix-blend-mode: multiply;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +28,8 @@
     }
 
     &__form {
-        background-color: variables.$bgLightSurface;
+        background-color: rgba(255, 255, 255, 0.531);
+        backdrop-filter: blur(10px);
         width: 536px;
         border-radius: 24px;
         box-shadow: variables.$shadow;

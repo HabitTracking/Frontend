@@ -128,7 +128,6 @@ const isPassword = ref(props.data.type === 'password');
 
         &--invalid {
             border-color: themes.$error700;
-            background-color: themes.$error100;
             margin-bottom: 6px;
 
             &:hover {
@@ -138,7 +137,6 @@ const isPassword = ref(props.data.type === 'password');
 
         &--valid {
             border-color: themes.$primary500;
-            background-color: themes.$primary100;
 
             &:hover {
                 border-color: themes.$primary800;
