@@ -12,7 +12,7 @@ export const getProfile = async () => {
 
 export const login = async body => {
     try {
-        const response = await instance.post(`/login`, body);
+        const response = await instance.post(`/user/login`, body);
 
         return response.data;
     } catch (error) {
@@ -34,7 +34,7 @@ export const login = async body => {
 export const signup = async body => {
     try {
         console.log(body);
-        const response = await instance.post(`/signup`, body);
+        const response = await instance.post(`/user/signup`, body);
         toast.success('ثبت نام با موفقیت انجام شد');
         return response;
     } catch (error) {
