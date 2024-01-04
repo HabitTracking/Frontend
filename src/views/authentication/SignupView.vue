@@ -11,14 +11,7 @@ const router = useRouter();
 const onSubmit = async values => {
     loadingButton.value = true;
 
-    const name = values.name.split(' ');
-
-    const isSignup = await signup({
-        firstName: name[0],
-        lastName: name[1],
-        email: values.email,
-        password: values.password
-    });
+    const isSignup = await signup(values);
     loadingButton.value = false;
     if (isSignup) router.push({ name: 'login' });
     else router.push({ name: 'signup' });

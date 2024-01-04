@@ -29,8 +29,14 @@ export const signupForm = {
     title: 'ثبت نام',
     inputs: [
         {
-            label: 'نام و نام خانوادگی',
-            name: 'name',
+            label: 'نام',
+            name: 'firstName',
+            type: 'text',
+            headingIcon: 'iconPerson'
+        },
+        {
+            label: 'نام خانوادگی',
+            name: 'lastName',
             type: 'text',
             headingIcon: 'iconPerson'
         },
