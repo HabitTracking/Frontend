@@ -1,5 +1,4 @@
 import moment from 'jalali-moment';
-import { getFile, putFile } from '@/services/fileStorage';
 import { activityStore } from '@/stores/activityStore';
 import { useCookies } from 'vue3-cookies';
 import {
@@ -100,12 +99,6 @@ export default class Activity {
             schemaVersion: Activity.schema.version,
             tags: `{"userId":"${cookies.get('userId')}"}`
         });
-
-        activities?.forEach(activity => {
-            activity.data.images = activity.data?.picture?.map(
-                async id => await getFile({ id: id })
-            );
-        });
         return activities?.map(activity => new Activity(activity));
     }
 
@@ -133,10 +126,5 @@ export default class Activity {
         deleteRequest({ id: this.id });
         const { deleteActivity } = activityStore();
         deleteActivity(this.id);
-    }
-    static async getIdPicture(files) {
-        const pictures = await putFile(files);
-
-        return Array.isArray(pictures) ? pictures.map(({ id }) => id) : pictures?.id;
     }
 }

@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import { schemaLogin } from '@/plugins/yup';
 import { ref } from 'vue';
 import { toast } from '@/plugins/toast';
-import { useCookies } from 'vue3-cookies';
+// import { useCookies } from 'vue3-cookies';
 import BaseForm from '@/components/base/BaseForm.vue';
 import { loginForm } from '@/common/constants/forms';
 
@@ -14,14 +14,14 @@ const loadingButton = ref(false);
 const logined = authData => {
     toast.success('ورود با موفقیت انجام شد');
 
-    const { cookies } = useCookies();
+    // const { cookies } = useCookies();
 
-    const { token, uniqueKey, firstName, lastName } = authData;
+    // const { firstName, lastName } = authData;
 
-    cookies.set('token', token);
-    cookies.set('userId', uniqueKey);
+    // cookies.set('token', token);
+    // cookies.set('userId', uniqueKey);
 
-    window.localStorage.setItem('fullName', `${firstName} ${lastName}`);
+    // window.localStorage.setItem('fullName', `${firstName} ${lastName}`);
 
     router.replace({ path: '/home' });
 };

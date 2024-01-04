@@ -1,4 +1,3 @@
-import { barjavandURL as URL } from '@/common/constants/path';
 import { toast } from '@/plugins/toast';
 
 import instance from '@/plugins/axios';
@@ -30,7 +29,7 @@ export const getActivity = async params => {
 
 export const postActivity = async body => {
     try {
-        const responseActivity = await instance.post(URL, body);
+        const responseActivity = await instance.post('/activity', body);
         toast.success('فعالیت با موفقیت ساخته شد');
         return responseActivity.data;
     } catch (error) {
@@ -40,7 +39,7 @@ export const postActivity = async body => {
 
 export const editActivity = async body => {
     try {
-        const editedActivity = await instance.put(URL, body);
+        const editedActivity = await instance.put('/activity', body);
         toast.success('فعالیت با موفقیت ویرایش شد');
         return editedActivity.data;
     } catch (error) {
@@ -50,7 +49,7 @@ export const editActivity = async body => {
 
 export const deleteActivity = params => {
     try {
-        instance.delete(URL, { params: params });
+        instance.delete('/activity', { params: params });
         toast.success('فعالیت با موفقیت حذف شد');
     } catch (error) {
         toast.error('حذف فعالیت با مشکل مواجه شد');

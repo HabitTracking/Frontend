@@ -4,8 +4,9 @@ import { useCookies } from 'vue3-cookies';
 import { toast } from './toast';
 const { cookies } = useCookies();
 const router = useRouter();
+import { BASE_URL } from '@/common/constants/path';
 
-const instance = axios.create();
+const instance = axios.create({ baseURL: BASE_URL });
 
 instance.interceptors.request.use(
     config => {

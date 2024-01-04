@@ -1,10 +1,9 @@
 import instance from '@/plugins/axios';
 import { toast } from '@/plugins/toast';
-import { userManagerURL as URL } from '@/common/constants/path';
 
 export const getProfile = async () => {
     try {
-        const { data: profile } = await instance.get(`${URL}/profile`);
+        const { data: profile } = await instance.get(`/profile`);
         return profile;
     } catch (error) {
         toast.error('دریافت اطلاعات کاربر با مشکل مواجه شد');
@@ -13,7 +12,7 @@ export const getProfile = async () => {
 
 export const login = async body => {
     try {
-        const response = await instance.post(`${URL}/login`, body);
+        const response = await instance.post(`/login`, body);
 
         return response.data;
     } catch (error) {
@@ -34,15 +33,12 @@ export const login = async body => {
 
 export const signup = async body => {
     try {
-        const response = await instance.post(`${URL}/signUp`, body);
+        const response = await instance.post(`/signup`, body);
         toast.success('ثبت نام با موفقیت انجام شد');
         return response;
     } catch (error) {
         switch (error?.response?.status) {
             case 400:
-                toast.error('داده های ورودی نامعتبرند');
-                break;
-            case 404:
                 toast.error('داده های ورودی نامعتبرند');
                 break;
             case 409:

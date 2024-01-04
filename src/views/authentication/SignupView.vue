@@ -5,9 +5,10 @@ import { useRouter } from 'vue-router';
 import { signup } from '@/services/usermanager';
 import BaseForm from '@/components/base/BaseForm.vue';
 import { signupForm } from '@/common/constants/forms';
+import { ref } from 'vue';
 
 const router = useRouter();
-
+const loadingButton = ref(false);
 const onSubmit = async values => {
     loadingButton.value = true;
 
@@ -19,7 +20,12 @@ const onSubmit = async values => {
 </script>
 
 <template>
-    <base-form :data="signupForm" @submit="onSubmit" :schema="schemaSignup" />
+    <base-form
+        :data="signupForm"
+        @submit="onSubmit"
+        :schema="schemaSignup"
+        :loadingButton="loadingButton"
+    />
     <div class="arrow">
         <RouterLink to="/">
             <BaseIcon path="common/iconArrow.vue" />
