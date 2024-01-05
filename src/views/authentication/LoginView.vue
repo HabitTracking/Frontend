@@ -11,28 +11,15 @@ import { loginForm } from '@/common/constants/forms';
 const router = useRouter();
 const loadingButton = ref(false);
 
-const logined = authData => {
-    toast.success('ورود با موفقیت انجام شد');
-
-    // const { cookies } = useCookies();
-
-    // const { firstName, lastName } = authData;
-
-    // cookies.set('token', token);
-    // cookies.set('userId', uniqueKey);
-
-    // window.localStorage.setItem('fullName', `${firstName} ${lastName}`);
-
-    router.replace({ path: '/home' });
-};
-
 const onSubmit = async values => {
     loadingButton.value = true;
-
     const authData = await login(values);
-
+    console.log(authData);
     loadingButton.value = false;
-    if (authData) logined(authData);
+
+    toast.success('ورود با موفقیت انجام شد');
+
+    router.replace({ path: '/home' });
 };
 </script>
 

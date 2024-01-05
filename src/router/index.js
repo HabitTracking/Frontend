@@ -8,17 +8,17 @@ const router = createRouter({
     routes
 });
 
-// router.beforeEach(to => {
-//     const { isAuthenticated } = authenticate();
+router.beforeEach(to => {
+    const { isAuthenticated } = authenticate();
 
-//     if (to.meta.needAuthenticated && !isAuthenticated()) {
-//         toast.error('اجازه دسترسی به این مسیر وجود ندارد');
-//         return { name: 'login' };
-//     }
-//     if (!to.meta.needAuthenticated && isAuthenticated()) {
-//         return { name: 'Home' };
-//     }
-// });
+    if (to.meta.needAuthenticated && !isAuthenticated()) {
+        toast.error('اجازه دسترسی به این مسیر وجود ندارد');
+        return { name: 'login' };
+    }
+    if (!to.meta.needAuthenticated && isAuthenticated()) {
+        return { name: 'Home' };
+    }
+});
 
 router.afterEach(to => {
     document.title = to.name;

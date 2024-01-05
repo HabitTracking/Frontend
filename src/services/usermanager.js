@@ -14,7 +14,7 @@ export const login = async body => {
     try {
         const response = await instance.post(`/user/login`, body);
 
-        return response.data;
+        return response;
     } catch (error) {
         switch (error?.response?.status) {
             case 400:
@@ -33,7 +33,6 @@ export const login = async body => {
 
 export const signup = async body => {
     try {
-        console.log(body);
         const response = await instance.post(`/user/signup`, body);
         toast.success('ثبت نام با موفقیت انجام شد');
         return response;

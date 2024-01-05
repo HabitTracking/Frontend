@@ -6,7 +6,9 @@ const props = defineProps({
         type: String
     }
 });
-const Icon = defineAsyncComponent(() => import(`../../assets/icons/${props.path}`));
+const Icon = defineAsyncComponent(() =>
+    import(/* @vite-ignore */ `../../assets/icons/${props.path}`)
+);
 </script>
 
 <template>
