@@ -1,40 +1,29 @@
-// import { useCookies } from 'vue3-cookies';
-// const { cookies } = useCookies();
-
-// import { getActivity as get } from '@/services/activityService';
+import {
+    postActivityType as post,
+    getActivityType as get
+} from '../../../services/activityTypeService';
 
 export default class ActivityType {
-    static schema = {
-        name: 'activityType',
-        version: '1.2.3'
-    };
-
     constructor(data) {
+        console.log(data);
         this.id = data._id;
 
-        this.title = data.data.title;
-        this.description = data.data.description;
+        this.title = data.title;
+        // this.description = data.description;
     }
 
-    static async getActivityType() {
-        // const params = {
-        //     schemaName: ActivityType.schema.name,
-        //     schemaVersion: ActivityType.schema.version,
-        //     tags: `{"userId":"${cookies.get('userId')}"}`
-        // };
+    getData() {
+        return {
+            title: this.title
+            // description: this.description
+        };
+    }
 
-        // const activitYTypes = await get(params);
-
-        const activityTypes = [
-            {
-                id: 'sas',
-                data: {
-                    title: 'asd',
-                    description: 'asdad'
-                }
-            }
-        ];
-
-        return activityTypes;
+    static async get() {
+        const activityTypes = await get();
+        return activityTypes.additionalInfo?.map(activityType => new ActivityType(activityType));
+    }
+    static async add(data) {
+        const res = await post(data);
     }
 }

@@ -5,27 +5,26 @@ import BaseTag from '@base/BaseTag.vue';
 
 <template>
     <div class="header">
-        <h6 class="header__title">گزارش ها</h6>
+        <h6 class="header__title">گزارش</h6>
         <div class="header__tags">
-            <BaseTag
+            <!-- <BaseTag
                 v-for="(duration, index) in ['روزانه', 'هفتگی', 'ماهانه', 'سالانه']"
                 :key="index"
                 :text="duration"
-            />
+            /> -->
         </div>
     </div>
     <div class="content">
-        <div class="max">
+        <!-- <div class="max">
             <BaseIcon class="max__icon" path="homeIcon/iconReport.vue" />
             <p class="max__description">بدون فعالیت</p>
         </div>
         <div class="list">
             <h6 class="list__title">بیشترین ها</h6>
             <p class="list__description">اولین فعالیت خودت رو بساز</p>
-        </div>
+        </div> -->
         <div class="reminder">
-            <h6 class="reminder__title">خلاصه گزارش</h6>
-            <p class="reminder__description">اولین فعالیت خودت رو بساز</p>
+            <h6 class="reminder__title">بزودی</h6>
         </div>
     </div>
 </template>

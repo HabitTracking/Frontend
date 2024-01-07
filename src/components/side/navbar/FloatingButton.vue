@@ -2,33 +2,17 @@
 import { ref } from 'vue';
 import BaseIcon from '@base/BaseIcon.vue';
 import FormAction from '@/components/modals/FormAction.vue';
-import Activity from '@/components/homePage/activity/Activity';
-import { actionForms } from '@/common/constants/forms';
+import ActivityTypeForm from '../../modals/ActivityTypeForm.vue';
 
 const floatingButtonModal = ref(false);
 const formModal = ref(false);
 
-const actionData = ref();
-const validationSchema = ref();
-
-const selected = ref();
+const activityTypeModal = ref(false);
 
 const closeFloatingButton = () => {
     floatingButtonModal.value = false;
     formModal.value = false;
-};
-
-const create = (data, errors) => {
-    floatingButtonModal.value = false;
-    formModal.value = true;
-    actionData.value = data;
-    validationSchema.value = errors;
-    selected.value = data?.nameEn;
-};
-
-const onSubmit = values => {
-    formModal.value = false;
-    if (selected.value == 'activity') Activity.addActivity(values);
+    activityTypeModal.value = false;
 };
 </script>
 
@@ -40,24 +24,27 @@ const onSubmit = values => {
         @click="floatingButtonModal = true"
     />
     <div v-if="floatingButtonModal" class="floating-button" @click.self="closeFloatingButton">
-        <div
-            v-for="(form, index) in actionForms"
-            :class="`floating-button__${form.nameEn}`"
-            :key="index"
-        >
-            <div class="floating-button__icon" @click="create(form, form.schema)">
-                <BaseIcon :path="`floatingIcons/icon${form.nameEn}Active.vue`" />
+        <div :class="`floating-button__activity`">
+            <div class="floating-button__icon" @click="() => (formModal = true)">
+                <BaseIcon :path="`floatingIcons/iconActivityActive.vue`" />
             </div>
 
-            <h4 class="floating-button__title">{{ form.name }}</h4>
+            <h4 class="floating-button__title">فعالیت</h4>
+        </div>
+        <div :class="`floating-button__activityType`">
+            <div class="floating-button__icon" @click="() => (activityTypeModal = true)">
+                <BaseIcon :path="`floatingIcons/iconActivityTypeActive.vue`" />
+            </div>
+
+            <h4 class="floating-button__title">نوغ فعالیت</h4>
         </div>
     </div>
-    <FormAction
-        v-if="formModal"
-        :data="actionData"
-        :schema="validationSchema"
+    <FormAction v-if="formModal" @close="closeFloatingButton" @submit="closeFloatingButton" />
+
+    <ActivityTypeForm
+        v-if="activityTypeModal"
         @close="closeFloatingButton"
-        @submit="onSubmit"
+        @submit="closeFloatingButton"
     />
 </template>
 
@@ -108,6 +95,7 @@ const onSubmit = values => {
 
     &__title {
         color: variables.$bgLightSurface;
+        white-space: nowrap;
     }
 
     @each $component in 'activity', 'activityType' {

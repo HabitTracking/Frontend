@@ -11,11 +11,6 @@ export const button = {
     }
 };
 
-export const registerWebAuthData = {
-    title: 'آیا ورود بیومتریک اضافه شود؟',
-    button: button
-};
-
 export const filterModal = {
     title: 'فیلتر ها',
     headerActivityType: 'نوع فعالیت',
@@ -50,4 +45,26 @@ export const removeActivity = {
         }
     }
 };
+export const removeActivityType = {
+    title: 'نوع فعالیت حذف شود؟',
+    button: {
+        cancel: button.cancel,
+        submit: {
+            text: 'حذف نوع فعالیت',
+            type: 'submit',
+            kind: 'warning'
+        }
+    }
+};
 
+export const logout = {
+    title: 'آیا می خواهید خارج شوید',
+    button: {
+        cancel: button.cancel,
+        submit: {
+            text: 'خروج',
+            type: 'submit',
+            kind: 'warning'
+        }
+    }
+};

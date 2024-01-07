@@ -4,7 +4,6 @@ import { useRouter } from 'vue-router';
 import { schemaLogin } from '@/plugins/yup';
 import { ref } from 'vue';
 import { toast } from '@/plugins/toast';
-// import { useCookies } from 'vue3-cookies';
 import BaseForm from '@/components/base/BaseForm.vue';
 import { loginForm } from '@/common/constants/forms';
 
@@ -15,11 +14,17 @@ const onSubmit = async values => {
     loadingButton.value = true;
     const authData = await login(values);
     console.log(authData);
+
+    if (authData) {
+        const { additionalInfo: info } = authData;
+
+        localStorage.setItem('fullName', info.firstname + ' ' + info.lastname);
+
+        toast.success('ورود با موفقیت انجام شد');
+
+        router.replace({ path: '/home' });
+    }
     loadingButton.value = false;
-
-    toast.success('ورود با موفقیت انجام شد');
-
-    router.replace({ path: '/home' });
 };
 </script>
 
@@ -29,6 +34,7 @@ const onSubmit = async values => {
         @submit="onSubmit"
         :schema="schemaLogin"
         :loadingButton="loadingButton"
+        :initial-values="{ email: 'ed@gmail.com', password: '1234mnMN' }"
     />
     <div class="register">
         حساب کاربری ندارید؟

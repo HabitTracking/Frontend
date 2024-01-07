@@ -21,7 +21,7 @@ const getActivityList = computed(() =>
 <template>
     <div class="navbar">
         <h5 class="navbar__title">فعالیت ها</h5>
-        <!-- <FilterBar :list="activities" type="activity" @filter="setFilter" /> -->
+        <FilterBar :list="activities" type="activity" @filter="setFilter" />
     </div>
     <ul v-if="activities?.length > 0" class="container">
         <li v-for="(activity, index) in getActivityList" :key="index" class="container__item">
@@ -40,7 +40,7 @@ const getActivityList = computed(() =>
     }
 }
 .container {
-    @include mixins.grid(repeat(4, 25%), auto, 20px);
+    @include mixins.grid(repeat(3, 33%), auto, 20px);
     @include mixins.screen(large) {
         @include mixins.grid(repeat(3, 33%), auto, 20px);
     }
@@ -54,6 +54,7 @@ const getActivityList = computed(() =>
 
     &__item {
         margin-block: 10px;
+        max-height: 280px;
     }
 }
 </style>

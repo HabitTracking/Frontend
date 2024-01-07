@@ -1,14 +1,23 @@
-// import instance from '@/plugins/axios';
-// import { toast } from '@/plugins/toast';
+import instance from '@/plugins/axios';
+import { toast } from '@/plugins/toast';
 
-// export const getActivityType = async params => {
-//     // try {
-//     //     const activityTypes = await instance.get('activityType', {
-//     //         params: params
-//     //     });
-//     //     return activityTypes?.data;
-//     // } catch (error) {
-//     //     toast.error('نوع فعالیت ها دریافت نشد');
-//     // }
-//     // return
-// };
+export const getActivityType = async () => {
+    try {
+        const activityTypes = await instance.get('/activityType');
+        return activityTypes;
+    } catch (error) {
+        toast.error('نوع فعالیت ها دریافت نشد');
+    }
+    return;
+};
+export const postActivityType = async body => {
+    console.log('ok');
+    try {
+        const activityTypes = await instance.post('/activityType', body);
+        toast.success('نوع فعالیت با موفقیت ساخته شد');
+        return activityTypes;
+    } catch (error) {
+        toast.error('نوع فعالیت ها ایجاد نشد');
+    }
+    return;
+};

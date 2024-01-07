@@ -16,6 +16,9 @@ defineProps({
     },
     loadingButton: {
         type: Boolean
+    },
+    initialValues: {
+        type: Object
     }
 });
 
@@ -28,7 +31,7 @@ const onSubmit = values => {
 };
 </script>
 <template>
-    <validation-form @submit="onSubmit" :validation-schema="schema">
+    <validation-form @submit="onSubmit" :validation-schema="schema" :initial-values="initialValues">
         <h3 class="title">{{ data?.title }}</h3>
         <div class="form">
             <BaseInput v-for="(input, index) in data?.inputs" :key="index" :data="input" />

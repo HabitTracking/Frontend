@@ -2,9 +2,7 @@
 import { activityStore } from '@/stores/activityStore';
 import ActivityCard from './ActivityCard.vue';
 import { storeToRefs } from 'pinia';
-const { activities } = storeToRefs( activityStore() );
-
-// console.log(activities);
+const { activities } = storeToRefs(activityStore());
 </script>
 
 <template>
@@ -13,7 +11,7 @@ const { activities } = storeToRefs( activityStore() );
     </div>
 
     <ul class="list">
-        <li v-for="index in 4" :key="index" class="list__card">
+        <li v-for="index in 3" :key="index" class="list__card">
             <ActivityCard v-if="activities?.[index - 1]" :data="activities?.[index - 1]" />
             <div v-else class="list__card--empty"></div>
         </li>
@@ -29,8 +27,7 @@ const { activities } = storeToRefs( activityStore() );
     @include mixins.flex(space-between, center, 20px);
 
     &__card {
-        max-width: 280px;
-        min-height: 480px;
+        min-height: 280px;
 
         &--empty {
             @include mixins.base-card;

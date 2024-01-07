@@ -2,19 +2,16 @@ import { toast } from '@/plugins/toast';
 
 import instance from '@/plugins/axios';
 
-export const getActivity = async params => {
-    console.log(params);
+export const getActivity = async () => {
     return [
         {
-            id: '1',
-            data: {
-                title: 'فعالیت',
-                description: 'شیشنسئیشئس یشیشسیکشس ی شسیک شسیت',
-                date: '12131212131',
-                startTime: '12:20',
-                endTime: '12:20',
-                activityType: 'شنا'
-            }
+            _id: '1',
+            title: 'فعالیت',
+            description: 'شیشنسئیشئس یشیشسیکشس ی شسیک شسیت',
+            date: '12131212131',
+            startTime: '12:20',
+            endTime: '12:20',
+            activityType: 'شنا'
         }
     ];
     // try {

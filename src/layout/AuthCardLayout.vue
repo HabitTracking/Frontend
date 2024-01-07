@@ -10,9 +10,8 @@
 
 <style scoped lang="scss">
 .auth-card {
-    background: url(../assets/images/bg.jpg);
+    background: url(../assets/images/bg.jpg) 50% 50%/100% no-repeat;
     background-position: center;
-    // background-color: ;
     mix-blend-mode: multiply;
     display: flex;
     justify-content: center;

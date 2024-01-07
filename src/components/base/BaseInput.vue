@@ -33,8 +33,13 @@ const isPassword = ref(props.data.type === 'password');
                 class="input__select"
                 as="select"
             >
-                <option v-for="(selection, index) in selections" :key="index" :value="selection">
-                    {{ selection }}
+                <option
+                    v-for="(selection, index) in selections"
+                    :key="index"
+                    :value="selection?.value ?? selection"
+                    class="input__option"
+                >
+                    {{ selection?.name ?? selection }}
                 </option>
             </Field>
 
@@ -46,11 +51,15 @@ const isPassword = ref(props.data.type === 'password');
                 :as="data?.as"
                 spellcheck="false"
                 @input="modelValue"
+                :id="data.name"
             />
 
-            <label class="input__label" :class="{ 'input__label--focus': inputValue }">{{
-                data?.label
-            }}</label>
+            <label
+                :for="data.name"
+                class="input__label"
+                :class="{ 'input__label--focus': inputValue }"
+                >{{ data?.label }}</label
+            >
             <div
                 v-if="data?.leadingIcon == 'iconEye-slash'"
                 @click="isPassword = !isPassword"
@@ -107,6 +116,11 @@ const isPassword = ref(props.data.type === 'password');
             text-align: right;
             appearance: none;
             border-radius: 10px;
+        }
+        &__option {
+            text-align: right;
+            font-size: 16px;
+            padding: 5px 0;
         }
         &__label {
             @include mixins.absolute(13px, 41px);

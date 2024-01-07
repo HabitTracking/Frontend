@@ -1,9 +1,9 @@
 <script setup>
-// import ShowReport from '@/components/homePage/TheReport.vue';
+import ShowReport from '@/components/homePage/TheReport.vue';
 import activityReminder from '@/components/homePage/activity/activityReminder.vue';
 import ActivityType from '@/components/homePage/activityType/ActivityType.vue';
 
-const homecomponents = [activityReminder, ActivityType];
+const homecomponents = [ShowReport, activityReminder, ActivityType];
 </script>
 
 <template>

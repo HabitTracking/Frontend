@@ -67,8 +67,20 @@ const createInfo = {
         type: 'text',
         headingIcon: 'iconNote'
     },
-    description: {
-        name: 'description',
+    target: {
+        name: 'target',
+        label: 'نام هدف',
+        type: 'text',
+        headingIcon: 'iconNote'
+    },
+    unit: {
+        name: 'unit',
+        label: 'واحد هدف',
+        type: 'text',
+        headingIcon: 'iconNote'
+    },
+    note: {
+        name: 'note',
         label: 'توضیحات',
         type: 'textArea',
         as: 'textArea',
@@ -76,21 +88,14 @@ const createInfo = {
     },
     date: {
         name: 'date',
-        label: 'تاریخ',
+        label: 'زمان شروع',
         type: 'text',
         kind: 'date',
         headingIcon: 'iconCalender'
     },
-    startTime: {
-        name: 'startTime',
-        label: 'از ساعت',
-        type: 'text',
-        kind: 'date',
-        headingIcon: 'iconClock'
-    },
-    endTime: {
-        name: 'endTime',
-        label: 'تا ساعت',
+    dueDate: {
+        name: 'dueDate',
+        label: 'زمان اتمام',
         type: 'text',
         kind: 'date',
         headingIcon: 'iconClock'
@@ -110,7 +115,7 @@ export const activityTypeForm = {
     title: 'ایجاد نوع فعالیت',
     inputs: [
         {
-            name: 'activityType',
+            name: 'title',
             label: 'نوع فعالیت',
             type: 'text',
             headingIcon: 'iconActivityType'
@@ -124,21 +129,39 @@ export const activityForm = {
     nameEn: 'activity',
     schema: schemaActivity,
     title: 'ایجاد فعالیت',
-    picture: true,
-    inputs: [createInfo.title, createInfo.description],
+    inputs: [createInfo.title, createInfo.note],
     time: {
         date: createInfo.date,
-        startTime: createInfo.startTime,
-        endTime: createInfo.endTime
+        dueDate: createInfo.dueDate
     },
-    select: createInfo.activityType,
+    frequency: {
+        name: 'frequency',
+        label: 'زمان تکرار',
+        type: 'select',
+        headingIcon: 'iconActivityType',
+        options: [
+            {
+                name: 'هر روز',
+                value: '1'
+            },
+            {
+                name: 'هر سه روز',
+                value: '3'
+            },
+            {
+                name: 'هر هفته',
+                value: '7'
+            },
+            {
+                name: 'هر ماه',
+                value: '30'
+            }
+        ]
+    },
+    target: createInfo.target,
+    unit: createInfo.unit,
+    activityType: createInfo.activityType,
     button: button
 };
 
 export const actionForms = [activityTypeForm, activityForm];
-
-export const webAuthForm = {
-    title: 'احراز هویت',
-    inputs: loginForm.inputs,
-    button: button
-};

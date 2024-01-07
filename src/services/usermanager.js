@@ -1,12 +1,12 @@
 import instance from '@/plugins/axios';
 import { toast } from '@/plugins/toast';
 
-export const getProfile = async () => {
+export const logout = async () => {
     try {
-        const { data: profile } = await instance.get(`/profile`);
-        return profile;
+        const res = await instance.post(`/user/logout`);
+        return res;
     } catch (error) {
-        toast.error('دریافت اطلاعات کاربر با مشکل مواجه شد');
+        toast.error('خروج با مشکل مواجه شد');
     }
 };
 
@@ -17,7 +17,7 @@ export const login = async body => {
         return response;
     } catch (error) {
         switch (error?.response?.status) {
-            case 400:
+            case 401:
                 toast.error('نام کاربری یا رمز عبور اشتباه است');
                 break;
             case 404:

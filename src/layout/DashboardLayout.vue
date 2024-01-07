@@ -4,9 +4,7 @@ import NavBar from '@/components/side/navbar/TheNavBar.vue';
 
 import { activityStore } from '@/stores/activityStore';
 import { activityTypeStore } from '@/stores/activityTypeStore';
-import { userInfo } from '@/stores/userInfoStore';
 
-userInfo().getUserInfo();
 activityStore().getActivity();
 activityTypeStore().getActivityType();
 </script>

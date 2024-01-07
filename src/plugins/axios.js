@@ -6,11 +6,14 @@ const { cookies } = useCookies();
 const router = useRouter();
 import { BASE_URL } from '@/common/constants/path';
 
-const instance = axios.create({ baseURL: BASE_URL });
-
+const instance = axios.create({
+    baseURL: BASE_URL,
+    withCredentials: true
+});
 instance.interceptors.request.use(
     config => {
-        config.headers['token'] = cookies.get('token') ?? '';
+        // console.log(cookies.get('token'));
+        // config.headers['token'] = cookies.get('token') ?? '';
         return config;
     },
     error => {

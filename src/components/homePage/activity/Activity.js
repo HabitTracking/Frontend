@@ -19,13 +19,12 @@ export default class Activity {
     constructor(data) {
         this.id = data._id;
 
-        this.title = data.data.title;
-        this.description = data.data.description;
-        this.date = data.data.date;
-        this.startTime = data.data.startTime;
-        this.endTime = data.data.endTime;
-        this.activityType = data.data.activityType;
-        this.images = data.data.images;
+        this.title = data.title;
+        this.description = data.note;
+        this.date = data.date;
+        this.startTime = data.startTime;
+        this.endTime = data.endTime;
+        this.activityType = data.activityType;
     }
 
     getData() {
@@ -35,8 +34,7 @@ export default class Activity {
             date: this.getDateFormated(),
             startTime: this.startTime,
             endTime: this.endTime,
-            activityType: this.activityType,
-            images: this.images
+            activityType: this.activityType
         };
     }
 
@@ -67,30 +65,26 @@ export default class Activity {
         }).format(moment(this.endTime, 'HH:mm'));
     }
 
-    static toTimeStamp(date) {
-        return '' + moment(date, 'jD jMMMM jYYYY').valueOf();
+    static toTimeStamp(date, format) {
+        return '' + moment(date, format).valueOf();
     }
 
     static async addActivity(data) {
         const body = {
-            schema: Activity.schema,
-            tags: {
-                userId: cookies.get('userId')
-            },
-            data: {
-                title: data.title,
-                date: Activity.toTimeStamp(data.date),
-                startTime: data.startTime,
-                endTime: data.endTime,
-                description: data.description,
-                activityType: data.activityType,
-                picture: await Activity.getIdPicture(data.images)
-            }
+            title: data.title,
+            date: Activity.toTimeStamp(data.date, 'jD jMMMM jYYYY  HH:mm'),
+            dueDate: Activity.toTimeStamp(data.dueDate, 'jD jMMMM jYYYY'),
+            frequency: +data.frequency,
+            note: data.note,
+            activityType: data.activityType,
+            target: data.target,
+            unit: data.unit
         };
-        const { _id: idActivity } = await postRequest(body);
+        console.log(body);
+        // const { _id: idActivity } = await postRequest(body);
 
-        const { addActivity } = activityStore();
-        addActivity(body, idActivity);
+        // const { addActivity } = activityStore();
+        // addActivity(body, idActivity);
     }
 
     static async getActivity() {
@@ -104,17 +98,13 @@ export default class Activity {
 
     async editActivity(data) {
         const body = {
-            schema: Activity.schema,
-            id: this.id,
-            data: {
-                title: data.title,
-                date: Activity.toTimeStamp(data.date),
-                startTime: data.startTime,
-                endTime: data.endTime,
-                description: data.description,
-                activityType: data.activityType,
-                picture: await Activity.getIdPicture(data.images)
-            }
+            title: data.title,
+            date: Activity.toTimeStamp(data.date),
+            startTime: data.startTime,
+            endTime: data.endTime,
+            description: data.description,
+            activityType: data.activityType,
+            picture: await Activity.getIdPicture(data.images)
         };
         const editedActivity = await putRequest(body);
 

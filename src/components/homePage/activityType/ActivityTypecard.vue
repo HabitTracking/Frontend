@@ -1,18 +1,14 @@
 <script setup>
 import BaseModal from '@/components/base/BaseModal.vue';
-import BaseTag from '@/components/base/BaseTag.vue';
 import BaseIcon from '@base/BaseIcon.vue';
 import { ref } from 'vue';
-import 'vue3-carousel/dist/carousel.css';
-import FormAction from '@/components/modals/FormAction.vue';
-import { removeActivity } from '@/common/constants/modal';
-import { activityForm } from '@/common/constants/forms';
-import { schemaActivity as schema } from '@/plugins/yup';
-import Activity from './Activity';
+import { removeActivityType } from '@/common/constants/modal';
+import ActivityType from './ActivityType';
+import ActivityTypeForm from '../../modals/ActivityTypeForm.vue';
 
 const props = defineProps({
     data: {
-        type: Activity,
+        type: ActivityType,
         required: true
     }
 });
@@ -66,37 +62,25 @@ const submitRemove = () => {
             </div>
         </div>
         <div class="card__description">
-            {{ data?.description }}
+            <!-- {{ data?.description }} -->
+            شیشنسئیشئس یشیشسیکشس ی شسیک شسیت
         </div>
-        <div class="card__footer footer">
-            <div class="footer__date">
-                <BaseIcon path="cardIcon/iconCalendar.vue" />
-                {{ data.getDate() }}
-            </div>
-            <div class="footer__duration">
-                <BaseIcon path="cardIcon/iconTime.vue" />
-                {{ data?.getStartTime() }} تا {{ data?.getEndTime() }}
-            </div>
-        </div>
-        <BaseTag class="card__tag" :text="data.activityType" is-active theme="red" />
     </div>
     <div v-if="menuShown" class="overlay" @click="menuShown = false"></div>
 
-    <form-action
+    <ActivityTypeForm
         v-if="editModal"
-        :data="activityForm"
-        :schema="schema"
         :value="data.getData()"
-        @close="editModal = false"
+        @close="() => (editModal = false)"
         @submit="submitEdit"
     />
 
     <base-modal
         v-if="removeModal"
         is-warning
-        :title="removeActivity.title"
-        :button="removeActivity.button"
-        @close="removeModal = false"
+        :title="removeActivityType.title"
+        :button="removeActivityType.button"
+        @close="() => (removeModal = false)"
         @submit="submitRemove"
     />
 </template>

@@ -8,8 +8,8 @@ export const activityTypeStore = defineStore('activityType', {
     }),
     actions: {
         async getActivityType() {
-            this.activityTypes = await ActivityType.getActivityType();
-            this.titleActivityTypes = this.activityTypes?.map(({ data: { title } }) => title);
+            this.activityTypes = await ActivityType.get();
+            this.titleActivityTypes = this.activityTypes?.map(({ title }) => title);
         }
     }
 });

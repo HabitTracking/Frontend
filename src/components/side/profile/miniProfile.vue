@@ -1,6 +1,19 @@
 <script setup>
 import BaseIcon from '@base/BaseIcon.vue';
-const fullName = window.localStorage.getItem('fullName');
+import { ref } from 'vue';
+import BaseModal from '../../base/BaseModal.vue';
+import { logout as form } from '../../../common/constants/modal';
+import { logout } from '../../../services/usermanager';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const removeModal = ref(false);
+
+const fullName = ref(localStorage.getItem('fullName'));
+
+const submit = async () => {
+    const res = await logout();
+    console.log(res);
+};
 </script>
 
 <template>
@@ -9,11 +22,19 @@ const fullName = window.localStorage.getItem('fullName');
             <div class="profile__image">
                 <img src="@/assets/images/Avatar.png" :title="fullName" alt="avatar" />
             </div>
-            <div>
-                <p class="profile__name">{{ fullName }}</p>
-            </div>
+            <p class="profile__name">{{ fullName }}</p>
         </div>
-        <BaseIcon path="homeIcon/iconNotification.vue"/>
+        <div @click="() => (removeModal = true)" class="profile__icon">
+            <BaseIcon path="homeIcon/logout.vue" />
+        </div>
+        <base-modal
+            v-if="removeModal"
+            is-warning
+            :title="form.title"
+            :button="form.button"
+            @close="removeModal = false"
+            @submit="submit"
+        />
     </div>
 </template>
 
@@ -26,10 +47,15 @@ const fullName = window.localStorage.getItem('fullName');
         height: 50px;
     }
     &__info {
-        @include mixins.grid(repeat(2, 1fr));
+        @include mixins.flex(center, center, 30px);
     }
     &__name {
         font: typography.$font_subtitle1;
+    }
+    &__icon {
+        transform: scale(1.5);
+        margin-left: 15px;
+        cursor: pointer;
     }
 }
 </style>

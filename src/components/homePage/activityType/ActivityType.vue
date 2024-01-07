@@ -1,10 +1,18 @@
+<script setup>
+import { storeToRefs } from 'pinia';
+import { activityTypeStore } from '../../../stores/activityTypeStore';
+import ActivityTypecard from './ActivityTypecard.vue';
+
+const { activityTypes } = storeToRefs(activityTypeStore());
+</script>
+
 <template>
     <div class="header">
         <h6>نوع فعالیت</h6>
     </div>
     <ul class="list">
-        <li v-for="index in 4" :key="index" class="list__card">
-            <div class="list__card--empty"></div>
+        <li v-for="(data, index) in activityTypes" :key="index" class="list__card">
+            <ActivityTypecard :data="data" />
         </li>
     </ul>
 </template>
@@ -18,7 +26,7 @@
     &__card {
         min-height: 110px;
 
-        &--empty {
+        & {
             @include mixins.base-card;
         }
     }

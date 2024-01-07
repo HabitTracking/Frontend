@@ -1,5 +1,5 @@
 <script setup>
-const emit =  defineEmits( ['click'] );
+const emit = defineEmits(['click']);
 defineProps({
     text: {
         type: String,
@@ -12,19 +12,24 @@ defineProps({
     },
     kind: {
         type: String,
-        validator: value => ['filled', 'warning', 'outline'].includes(value),
-        required: true
+        validator: value => ['filled', 'warning', 'outline'].includes(value)
     },
     isLoading: {
         type: Boolean,
         default: false
     }
-} );
-const onClick = () => emit('click')
+});
+const onClick = () => emit('click');
 </script>
 
 <template>
-    <button class="button" :disabled="isLoading" :type="type" :class="`button--${kind}`" @click="onClick()">
+    <button
+        class="button"
+        :disabled="isLoading"
+        :type="type"
+        :class="`button--${kind}`"
+        @click="onClick()"
+    >
         <span v-if="!isLoading">{{ text }}</span>
         <span v-else class="button--loading"></span>
     </button>
