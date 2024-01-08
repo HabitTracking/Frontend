@@ -11,8 +11,8 @@ const removeModal = ref(false);
 const fullName = ref(localStorage.getItem('fullName'));
 
 const submit = async () => {
-    const res = await logout();
-    console.log(res);
+    await logout();
+    router.push('/login');
 };
 </script>
 

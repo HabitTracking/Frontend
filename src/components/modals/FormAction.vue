@@ -3,11 +3,12 @@ import BaseModal from '@base/BaseModal.vue';
 import BaseInput from '@base/BaseInput.vue';
 import { Form as ValidationForm, configure } from 'vee-validate';
 import DatePicker from '../modals/DatePicker.vue';
-import { activityTypeStore } from '@/stores/activityTypeStore';
-import { storeToRefs } from 'pinia';
-import { schemaActivity } from '../../plugins/yup';
-import { activityForm as data } from '../../common/constants/forms';
+import { schemaActivity } from '@/plugins/yup';
+import { activityForm as data } from '@/common/constants/forms';
 import Activity from '../homePage/activity/Activity';
+import FilterActivityType from './FilterActivityType.vue';
+import { ref } from 'vue';
+import { activityTypeStore } from '@/stores/activityTypeStore';
 
 const emits = defineEmits(['close', 'submit']);
 
@@ -20,12 +21,18 @@ defineProps({
 configure({
     validateOnInput: true
 });
-
-const { titleActivityTypes } = storeToRefs(activityTypeStore());
+const store = activityTypeStore();
 
 const onSubmit = values => {
     emits('submit');
     Activity.addActivity(values);
+    store.selectedActivitytype = '';
+};
+
+const showFilterActivityType = ref(false);
+
+const submitFilteractivityType = activityTypes => {
+    showFilterActivityType.value = false;
 };
 </script>
 
@@ -55,11 +62,17 @@ const onSubmit = values => {
                     <base-input :data="data?.unit" />
                 </div>
 
-                <!-- <color-picker v-model:pureColor="pureColor" /> -->
-
-                <base-input :data="data?.activityType" :selections="titleActivityTypes" />
+                <div @click="showFilterActivityType = true">
+                    <base-input :data="data?.activityType" />
+                </div>
             </div>
+            <!-- <color-picker v-model:pureColor="pureColor" /> -->
         </base-modal>
+        <FilterActivityType
+            v-if="showFilterActivityType"
+            @close="showFilterActivityType = false"
+            @submit="submitFilteractivityType"
+        />
     </validation-form>
 </template>
 

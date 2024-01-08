@@ -19,8 +19,8 @@ const props = defineProps({
     text: String
 });
 
-const headingIcon = defineAsyncComponent(() =>
-    import(`../../assets/icons/filterIcons/icon${props.icon}.vue`)
+const headingIcon = defineAsyncComponent(
+    () => import(`../../assets/icons/filterIcons/icon${props.icon}.vue`)
 );
 
 const isActiveTag = computed(() => (props.isActive ? `tag--${props.theme}` : ''));
@@ -40,9 +40,12 @@ const isActiveTag = computed(() => (props.isActive ? `tag--${props.theme}` : '')
     </div>
 </template>
 <style scoped lang="scss">
-$themes: 'red' themes.$error100 themes.$error600, 'violet' themes.$tertiary100 themes.$tertiary600,
+$themes:
+    'red' themes.$error100 themes.$error600,
+    'violet' themes.$tertiary100 themes.$tertiary600,
     'orange' themes.$warning100 themes.$warning600,
-    'yellow' themes.$secondary100 themes.$secondary600, 'blue' themes.$info100 themes.$info600;
+    'yellow' themes.$secondary100 themes.$secondary600,
+    'blue' themes.$info100 themes.$info600;
 
 .tag {
     width: max-content;
@@ -56,6 +59,7 @@ $themes: 'red' themes.$error100 themes.$error600, 'violet' themes.$tertiary100 t
     text-align: center;
     outline: none;
     user-select: none;
+    border: 1px solid transparent;
 
     &__icon {
         cursor: pointer;

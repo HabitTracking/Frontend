@@ -8,18 +8,14 @@ export const activityStore = defineStore('activity', {
     actions: {
         async getActivity() {
             this.activities = await Activity.getActivity();
-            this.sortActivity();
         },
-        addActivity(values, id) {
-            values._id = id;
+        addActivity(values) {
             this.activities?.push(values);
-            this.sortActivity();
         },
         editActivity(values) {
             this.activities = this.activities?.map(activity =>
                 values?._id === activity.id ? new Activity(values) : activity
             );
-            this.sortActivity();
         },
         deleteActivity(id) {
             this.activities = this.activities?.filter(activity => activity.id !== id);

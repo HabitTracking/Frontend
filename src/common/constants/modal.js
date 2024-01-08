@@ -30,7 +30,22 @@ export const modalActivityType = {
     title: 'انتخاب نوع فعالیت',
     button: {
         cancel: button.cancel,
-        submit: button.submit
+        submit: {
+            text: 'ورود',
+            type: 'button',
+            kind: 'filled'
+        }
+    }
+};
+
+export const progressActivity = {
+    button: {
+        cancel: button.cancel,
+        submit: {
+            text: 'انجام فعالیت',
+            type: 'submit',
+            kind: 'filled'
+        }
     }
 };
 

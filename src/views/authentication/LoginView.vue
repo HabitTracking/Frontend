@@ -13,16 +13,16 @@ const loadingButton = ref(false);
 const onSubmit = async values => {
     loadingButton.value = true;
     const authData = await login(values);
-    console.log(authData);
-
     if (authData) {
         const { additionalInfo: info } = authData;
 
         localStorage.setItem('fullName', info.firstname + ' ' + info.lastname);
 
-        toast.success('ورود با موفقیت انجام شد');
-
         router.replace({ path: '/home' });
+
+        setTimeout(() => {
+            toast.success(`خوض آمدید ` + info.firstname);
+        }, 700);
     }
     loadingButton.value = false;
 };
@@ -34,7 +34,7 @@ const onSubmit = async values => {
         @submit="onSubmit"
         :schema="schemaLogin"
         :loadingButton="loadingButton"
-        :initial-values="{ email: 'ed@gmail.com', password: '1234mnMN' }"
+        :initial-values="{ email: 'navidt@gmail.com', password: '12345678' }"
     />
     <div class="register">
         حساب کاربری ندارید؟

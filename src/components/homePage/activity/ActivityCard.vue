@@ -3,12 +3,14 @@ import BaseModal from '@/components/base/BaseModal.vue';
 import BaseTag from '@/components/base/BaseTag.vue';
 import BaseIcon from '@base/BaseIcon.vue';
 import { ref } from 'vue';
-import 'vue3-carousel/dist/carousel.css';
 import FormAction from '@/components/modals/FormAction.vue';
-import { removeActivity } from '@/common/constants/modal';
+import { removeActivity, progressActivity } from '@/common/constants/modal';
 import { activityForm } from '@/common/constants/forms';
 import { schemaActivity as schema } from '@/plugins/yup';
 import Activity from './Activity';
+import BaseInput from '../../base/BaseInput.vue';
+import { Form as ValidationForm } from 'vee-validate';
+import { schemaProgress } from '@/plugins/yup';
 
 const props = defineProps({
     data: {
@@ -22,12 +24,17 @@ const menuShown = ref(false);
 const removeModal = ref(false);
 const editModal = ref(false);
 
+const progressModal = ref(false);
+
 const disappearMenu = () => {
     menuShown.value = false;
     removeModal.value = false;
     editModal.value = false;
 };
-
+const onSubmitProgress = value => {
+    props.data.progress(value.amount);
+    progressModal.value = false;
+};
 const edit = () => {
     menuShown.value = false;
     editModal.value = true;
@@ -45,6 +52,12 @@ const submitRemove = () => {
     disappearMenu();
     props.data.deleteActivity();
 };
+
+function openProgress() {
+    progressModal.value = true;
+}
+
+const formInput = { name: 'amount', type: 'text', label: 'مقدار هدف', headingIcon: 'iconNote' };
 </script>
 
 <template>
@@ -71,14 +84,24 @@ const submitRemove = () => {
         <div class="card__footer footer">
             <div class="footer__date">
                 <BaseIcon path="cardIcon/iconCalendar.vue" />
-                {{ data.getDate() }}
+                {{ data?.getDate() }} تا {{ data?.getDueDate() }}
             </div>
             <div class="footer__duration">
                 <BaseIcon path="cardIcon/iconTime.vue" />
-                {{ data?.getStartTime() }} تا {{ data?.getEndTime() }}
+                {{ data.getTime() }}
             </div>
         </div>
-        <BaseTag class="card__tag" :text="data.activityType" is-active theme="red" />
+        <div class="card__tags">
+            <BaseTag class="card__tag" :text="data.activityType" is-active theme="red" />
+            <BaseTag class="card__tag" :text="data.getTag()" is-active theme="violet" />
+            <BaseTag
+                class="card__tag"
+                text="افزودن پیشترفت"
+                is-active
+                theme="blue"
+                @click="openProgress()"
+            />
+        </div>
     </div>
     <div v-if="menuShown" class="overlay" @click="menuShown = false"></div>
 
@@ -99,6 +122,22 @@ const submitRemove = () => {
         @close="removeModal = false"
         @submit="submitRemove"
     />
+
+    <ValidationForm
+        v-if="progressModal"
+        @submit="onSubmitProgress"
+        :validation-schema="schemaProgress"
+    >
+        <BaseModal
+            title="افزودن پیشترفت"
+            :button="progressActivity.button"
+            @close="progressModal = false"
+        >
+            <div class="">
+                <BaseInput :data="formInput" />
+            </div>
+        </BaseModal>
+    </ValidationForm>
 </template>
 
 <style scoped lang="scss">
@@ -106,6 +145,9 @@ const submitRemove = () => {
     max-height: 480px;
     &__description {
         height: 100px;
+    }
+    &__tags {
+        @include mixins.flex(flex-start, center, 8px);
     }
 }
 </style>

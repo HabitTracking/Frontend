@@ -11,7 +11,6 @@ export const getActivityType = async () => {
     return;
 };
 export const postActivityType = async body => {
-    console.log('ok');
     try {
         const activityTypes = await instance.post('/activityType', body);
         toast.success('نوع فعالیت با موفقیت ساخته شد');

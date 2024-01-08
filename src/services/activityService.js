@@ -3,34 +3,36 @@ import { toast } from '@/plugins/toast';
 import instance from '@/plugins/axios';
 
 export const getActivity = async () => {
-    return [
-        {
-            _id: '1',
-            title: 'فعالیت',
-            description: 'شیشنسئیشئس یشیشسیکشس ی شسیک شسیت',
-            date: '12131212131',
-            startTime: '12:20',
-            endTime: '12:20',
-            activityType: 'شنا'
-        }
-    ];
-    // try {
-    //     const activities = await instance.get(URL, {
-    //         params: params
-    //     });
-    //     return activities.data?.results;
-    // } catch (error) {
-    //     toast.error('فعالیت ها دریافت نشد');
-    // }
+    try {
+        const activities = await instance.get('/activity');
+        return activities.additionalInfo;
+    } catch (error) {
+        toast.error('فعالیت ها دریافت نشد');
+    }
 };
 
 export const postActivity = async body => {
     try {
         const responseActivity = await instance.post('/activity', body);
-        toast.success('فعالیت با موفقیت ساخته شد');
-        return responseActivity.data;
+        setTimeout(() => {
+            toast.success('فعالیت با موفقیت ایجاد شد');
+        }, 1000);
+        return responseActivity;
     } catch (error) {
         toast.error('ساخت فعالیت با مشکل مواجه شد');
+    }
+};
+export const postProgress = async body => {
+    try {
+        const responseActivity = await instance.post('/activity/addProgress', body);
+        setTimeout(() => {
+            toast.success('انجام فعالیت با موفقیت ثبت شد');
+        }, 1000);
+        return responseActivity.data;
+    } catch (error) {
+        setTimeout(() => {
+            toast.warning('انجام فعالیت ثبت نشد');
+        }, 1000);
     }
 };
 

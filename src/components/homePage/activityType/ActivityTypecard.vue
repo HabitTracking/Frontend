@@ -61,10 +61,7 @@ const submitRemove = () => {
                 </div>
             </div>
         </div>
-        <div class="card__description">
-            <!-- {{ data?.description }} -->
-            شیشنسئیشئس یشیشسیکشس ی شسیک شسیت
-        </div>
+        <div class="card__description"></div>
     </div>
     <div v-if="menuShown" class="overlay" @click="menuShown = false"></div>
 

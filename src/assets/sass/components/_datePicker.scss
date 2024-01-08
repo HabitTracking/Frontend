@@ -2,7 +2,7 @@
 @use '@/assets/sass/base/typography';
 
 .vpd-main {
-    position: absolute;
+    position: absolute !important   ;
 }
 
 .date-picker {

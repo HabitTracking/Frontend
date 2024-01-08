@@ -12,8 +12,6 @@ const instance = axios.create({
 });
 instance.interceptors.request.use(
     config => {
-        // console.log(cookies.get('token'));
-        // config.headers['token'] = cookies.get('token') ?? '';
         return config;
     },
     error => {
@@ -23,7 +21,6 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
     response => {
-        console.log(response);
         return response.data;
     },
     error => {

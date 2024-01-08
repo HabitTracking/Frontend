@@ -5,14 +5,16 @@ import FormAction from '@/components/modals/FormAction.vue';
 import ActivityTypeForm from '../../modals/ActivityTypeForm.vue';
 
 const floatingButtonModal = ref(false);
-const formModal = ref(false);
-
+const activityModal = ref(false);
 const activityTypeModal = ref(false);
 
 const closeFloatingButton = () => {
     floatingButtonModal.value = false;
-    formModal.value = false;
+    activityModal.value = false;
     activityTypeModal.value = false;
+};
+const open = () => {
+    activityModal.value = true;
 };
 </script>
 
@@ -24,22 +26,22 @@ const closeFloatingButton = () => {
         @click="floatingButtonModal = true"
     />
     <div v-if="floatingButtonModal" class="floating-button" @click.self="closeFloatingButton">
-        <div :class="`floating-button__activity`">
-            <div class="floating-button__icon" @click="() => (formModal = true)">
+        <div class="floating-button__activity">
+            <div class="floating-button__icon" @click.stop="open()">
                 <BaseIcon :path="`floatingIcons/iconActivityActive.vue`" />
             </div>
 
             <h4 class="floating-button__title">فعالیت</h4>
         </div>
         <div :class="`floating-button__activityType`">
-            <div class="floating-button__icon" @click="() => (activityTypeModal = true)">
+            <div class="floating-button__icon" @click.stop="activityTypeModal = true">
                 <BaseIcon :path="`floatingIcons/iconActivityTypeActive.vue`" />
             </div>
 
             <h4 class="floating-button__title">نوغ فعالیت</h4>
         </div>
     </div>
-    <FormAction v-if="formModal" @close="closeFloatingButton" @submit="closeFloatingButton" />
+    <FormAction v-if="activityModal" @close="closeFloatingButton" @submit="closeFloatingButton" />
 
     <ActivityTypeForm
         v-if="activityTypeModal"

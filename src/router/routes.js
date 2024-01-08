@@ -4,7 +4,19 @@ import DashboardLayout from '@/layout/DashboardLayout.vue';
 const routes = [
     {
         path: '/',
-        redirect: '/login'
+        name: 'main',
+        component: () => import('@/views/MainView.vue'),
+        meta: {
+            layout: AuthCardLayout
+        }
+    },
+    {
+        path: '/about',
+        name: 'about',
+        component: () => import('@/views/AboutView.vue'),
+        meta: {
+            layout: AuthCardLayout
+        }
     },
     {
         path: '/login',

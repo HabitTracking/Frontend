@@ -69,7 +69,7 @@ const createInfo = {
     },
     target: {
         name: 'target',
-        label: 'نام هدف',
+        label: 'هدف',
         type: 'text',
         headingIcon: 'iconNote'
     },
@@ -103,7 +103,8 @@ const createInfo = {
     activityType: {
         name: 'activityType',
         label: 'نوع فعالیت',
-        type: 'select',
+        type: 'text',
+        disabled: true,
         headingIcon: 'iconActivityType'
     }
 };
@@ -116,7 +117,7 @@ export const activityTypeForm = {
     inputs: [
         {
             name: 'title',
-            label: 'نوع فعالیت',
+            label: 'نام نوع فعالیت',
             type: 'text',
             headingIcon: 'iconActivityType'
         }
@@ -138,7 +139,7 @@ export const activityForm = {
         name: 'frequency',
         label: 'زمان تکرار',
         type: 'select',
-        headingIcon: 'iconActivityType',
+        headingIcon: 'iconNote',
         options: [
             {
                 name: 'هر روز',

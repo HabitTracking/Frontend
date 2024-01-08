@@ -2,20 +2,18 @@ import {
     postActivityType as post,
     getActivityType as get
 } from '../../../services/activityTypeService';
+// import { activityTypeStore } from '@/stores/activityTypeStore';
 
 export default class ActivityType {
     constructor(data) {
-        console.log(data);
         this.id = data._id;
-
         this.title = data.title;
-        // this.description = data.description;
     }
 
     getData() {
         return {
-            title: this.title
-            // description: this.description
+            title: this.title,
+            id: this.id
         };
     }
 

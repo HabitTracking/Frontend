@@ -9,14 +9,14 @@ const props = defineProps({
         required: true,
         validator: value => value.type && value.name
     },
-    modelValue: String,
-    selections: Array
+    selections: Array,
+    modelValue: String
 });
 
 const { value: inputValue, errorMessage: error, meta } = useField(props.data?.name);
 
-const headingIcon = defineAsyncComponent(() =>
-    import(`../../assets/icons/formIcons/${props.data?.headingIcon}.vue`)
+const headingIcon = defineAsyncComponent(
+    () => import(`../../assets/icons/formIcons/${props.data?.headingIcon}.vue`)
 );
 
 const isPassword = ref(props.data.type === 'password');
@@ -50,8 +50,8 @@ const isPassword = ref(props.data.type === 'password');
                 :class="`input__${data.type}`"
                 :as="data?.as"
                 spellcheck="false"
-                @input="modelValue"
                 :id="data.name"
+                autocomplete="off"
             />
 
             <label
@@ -70,7 +70,7 @@ const isPassword = ref(props.data.type === 'password');
             </div>
         </div>
         <div class="box__error">
-            <error-message :name="data?.name" v-slot="{ message }">
+            <error-message class="box__error--error" :name="data?.name" v-slot="{ message }">
                 <BaseIcon path="common/iconError.vue" />
                 {{ message }}
             </error-message>
@@ -88,7 +88,6 @@ const isPassword = ref(props.data.type === 'password');
         padding: 8px 9px;
         position: relative;
         transition: label 0.2s ease-in;
-        margin-bottom: 22px;
 
         &:hover,
         &:focus {
@@ -142,7 +141,6 @@ const isPassword = ref(props.data.type === 'password');
 
         &--invalid {
             border-color: themes.$error700;
-            margin-bottom: 6px;
 
             &:hover {
                 border-color: themes.$error900;
@@ -159,7 +157,8 @@ const isPassword = ref(props.data.type === 'password');
     }
 
     &__error {
-        margin: 0 4px 4px 0;
+        height: 22px;
+        margin: 5px 4px 1px 0;
         @include mixins.flex(auto, auto, 3px);
         font: typography.$font_caption;
         color: themes.$error900;

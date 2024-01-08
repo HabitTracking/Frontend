@@ -1,73 +1,37 @@
 <script setup>
 import BaseModal from '@base/BaseModal.vue';
 import BaseTag from '@base/BaseTag.vue';
-import { toast } from '@/plugins/toast';
-import BaseIcon from '@base/BaseIcon.vue';
 import { modalActivityType as data } from '@/common/constants/modal';
 import { ref } from 'vue';
 import { activityTypeStore } from '@/stores/activityTypeStore';
-import { storeToRefs } from 'pinia';
+import { useField } from 'vee-validate';
 
 const emits = defineEmits(['submit']);
 
-const props = defineProps({
-    activityTypes: {
-        type: Array
-    }
-});
+const selected = ref();
+const { value: inputValue } = useField('activityType');
 
-const { titleActivityTypes } = storeToRefs(activityTypeStore());
+const store = activityTypeStore();
 
-const searchInput = ref();
-
-const selectedActivityTypes = ref(props.activityTypes);
-
-const selectActivityType = () => {
-    if (!titleActivityTypes.value?.includes(searchInput.value))
-        toast.error('نوع فعالیت انتخابی وجود ندارد');
-    else if (selectedActivityTypes.value?.includes(searchInput.value))
-        toast.error('نوع فعالیت انتخابی تکراری است');
-    else selectedActivityTypes.value.push(searchInput.value);
-    searchInput.value = '';
+const selectActivityType = activityType => {
+    selected.value = activityType;
 };
 
 const onSubmit = () => {
-    selectedActivityTypes.value?.length == 0
-        ? toast.error('نوع فعالیتی انتخاب نکردید')
-        : emits('submit', selectedActivityTypes.value);
+    inputValue.value = selected.value;
+    emits('submit', selected.value);
 };
 </script>
 
 <template>
     <base-modal @submit="onSubmit" :title="data?.title" :button="data?.button" class="modal">
-        <div class="search-input">
-            <BaseIcon path="modalIcons/iconSearch.vue" class="search-input__icon" />
-            <input
-                v-model="searchInput"
-                type="search"
-                list="activityTypes"
-                class="search-input__input"
-                name="activityTypes"
-                placeholder="جستجوی فعالیت"
-                spellcheck="false"
-            />
-            <datalist id="activityTypes">
-                <option
-                    v-for="(activityType, index) in titleActivityTypes"
-                    :key="index"
-                    :value="activityType"
-                >
-                    {{ activityType }}
-                </option>
-            </datalist>
-            <BaseIcon path="modalIcons/iconAddTag.vue" @click="selectActivityType" />
-        </div>
         <div class="modal__list">
             <BaseTag
-                v-for="(activityType, index) in selectedActivityTypes"
+                v-for="(activityType, index) in store.titleActivityTypes"
                 :key="index"
                 :text="activityType"
-                is-active
+                :is-active="activityType == selected"
+                @click="selectActivityType(activityType)"
             />
         </div>
     </base-modal>
@@ -76,7 +40,8 @@ const onSubmit = () => {
 <style scoped lang="scss">
 .modal {
     &__list {
-        @include mixins.flex(flex-start, $gap: 8px, $wrap: wrap);
+        @include mixins.flex($gap: 8px, $wrap: wrap);
+        justify-content: center;
         margin-bottom: 30px;
     }
 }

@@ -10,8 +10,6 @@ const router = createRouter({
 
 router.beforeEach(to => {
     const { cookies } = useCookies();
-
-    console.log(cookies.get('token'));
     const isAuthenticated = cookies.isKey('token');
 
     if (to.meta.needAuthenticated && !isAuthenticated) {

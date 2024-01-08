@@ -5,6 +5,10 @@ export const schemaLogin = Yup.object().shape({
     password: Yup.string().required('رمز عبور را وارد نمایید')
 });
 
+export const schemaProgress = Yup.object().shape({
+    amount: Yup.string().required('مقدار هدف را وارد نمایید')
+});
+
 export const schemaSignup = Yup.object().shape({
     firstname: Yup.string().required('نام خود را وارد کنید').min(3, 'نام حداقل سه حرف داشته باشد'),
     lastname: Yup.string()
@@ -13,9 +17,6 @@ export const schemaSignup = Yup.object().shape({
     email: Yup.string().email('ایمیل معتبر نیست').required('ایمیل را وارد کنید'),
     password: Yup.string()
         .required('رمز عبور را وارد نمایید')
-        .matches(/[0-9]/, 'رمز عبور باید شامل عدد باشد')
-        .matches(/[a-z]/, 'رمز عبور باید شامل حروف  کوچک باشد')
-        .matches(/[A-Z]/, 'رمز عبور باید شامل حروف بزرگ باشد')
         .min(8, 'رمز عبور باید حداقل 8 کاراکتر باشد')
 });
 

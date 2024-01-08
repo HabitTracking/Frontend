@@ -5,7 +5,8 @@ import {
     postActivity as postRequest,
     deleteActivity as deleteRequest,
     editActivity as putRequest,
-    getActivity as getRequest
+    getActivity as getRequest,
+    postProgress
 } from '@/services/activityService';
 
 const { cookies } = useCookies();
@@ -19,27 +20,56 @@ export default class Activity {
     constructor(data) {
         this.id = data._id;
 
-        this.title = data.title;
+        this.title = data.name;
         this.description = data.note;
-        this.date = data.date;
-        this.startTime = data.startTime;
-        this.endTime = data.endTime;
+        this.date = data.startTime;
+        this.dueDate = data.dueDate;
         this.activityType = data.activityType;
+        this.target = data.targetAmount;
+        this.unit = data.targetUnit;
+        this.frequency = data.frequency;
     }
 
     getData() {
         return {
             title: this.title,
-            description: this.description,
-            date: this.getDateFormated(),
-            startTime: this.startTime,
-            endTime: this.endTime,
-            activityType: this.activityType
+            note: this.description,
+            date: this.getDateFormated(this.date),
+            dueDate: this.getDateFormated(this.dueDate),
+            target: this.target,
+            unit: this.unit,
+            activityType: this.activityType,
+            frequency: this.frequency
         };
     }
 
-    getDateFormated() {
-        return moment(+this.date).format('jD jMMMM jYYYY');
+    progress(amount) {
+        postProgress({
+            activityId: this.id,
+            date: '' + new Date().getTime(),
+            amount
+        });
+    }
+
+    getDateFormated(date) {
+        return moment(+date).format('jD jMMMM jYYYY');
+    }
+
+    getFrequency() {
+        switch (this.frequency) {
+            case 1:
+                return 'هر روز';
+            case 3:
+                return 'هر سه روز';
+            case 7:
+                return 'هفته ای';
+            case 30:
+                return 'هر ماه';
+        }
+    }
+
+    getTag() {
+        return `${this.getFrequency()} ${this.target} ${this.unit}`;
     }
 
     getDate() {
@@ -49,20 +79,19 @@ export default class Activity {
             month: 'short'
         }).format(moment(+this.date));
     }
-
-    getStartTime() {
-        if (+this.startTime) return 'invalid time';
+    getDueDate() {
+        if (isNaN(+this.date)) return 'invalid date';
         return new Intl.DateTimeFormat('fa-IR', {
-            hour: 'numeric',
-            minute: 'numeric'
-        }).format(moment(this.startTime, 'HH:mm'));
+            day: 'numeric',
+            month: 'short'
+        }).format(moment(+this.dueDate));
     }
-    getEndTime() {
+    getTime() {
         if (+this.startTime) return 'invalid time';
         return new Intl.DateTimeFormat('fa-IR', {
             hour: 'numeric',
             minute: 'numeric'
-        }).format(moment(this.endTime, 'HH:mm'));
+        }).format(moment(this.date, 'HH:mm'));
     }
 
     static toTimeStamp(date, format) {
@@ -71,28 +100,25 @@ export default class Activity {
 
     static async addActivity(data) {
         const body = {
-            title: data.title,
-            date: Activity.toTimeStamp(data.date, 'jD jMMMM jYYYY  HH:mm'),
+            name: data.title,
+            startTime: Activity.toTimeStamp(data.date, 'jD jMMMM jYYYY  HH:mm'),
             dueDate: Activity.toTimeStamp(data.dueDate, 'jD jMMMM jYYYY'),
             frequency: +data.frequency,
             note: data.note,
             activityType: data.activityType,
-            target: data.target,
-            unit: data.unit
+            targetAmount: +data.target,
+            targetUnit: data.unit
         };
-        console.log(body);
-        // const { _id: idActivity } = await postRequest(body);
+        const response = await postRequest(body);
 
-        // const { addActivity } = activityStore();
-        // addActivity(body, idActivity);
+        const newBody = { ...body, _id: response.additionalInfo.activityid };
+
+        const { addActivity } = activityStore();
+        addActivity(new Activity(newBody));
     }
 
     static async getActivity() {
-        const activities = await getRequest({
-            schemaName: Activity.schema.name,
-            schemaVersion: Activity.schema.version,
-            tags: `{"userId":"${cookies.get('userId')}"}`
-        });
+        const activities = await getRequest({});
         return activities?.map(activity => new Activity(activity));
     }
 
