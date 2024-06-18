@@ -34,7 +34,6 @@ const onSubmit = async values => {
         @submit="onSubmit"
         :schema="schemaLogin"
         :loadingButton="loadingButton"
-        :initial-values="{ email: 'navidt@gmail.com', password: '12345678' }"
     />
     <div class="register">
         حساب کاربری ندارید؟

@@ -1,11 +1,11 @@
 <script setup>
 import miniProfile from '@/components/side/profile/miniProfile.vue';
-// import CurrentEvents from '@/components/side/currentEvents/TheCurrentEvents.vue';
+import CurrentEvents from '@/components/side/currentEvents/TheCurrentEvents.vue';
 import TheCalender from '@/components/side/calendar/TheCalender.vue';
 import moment from 'jalali-moment';
 import { ref } from 'vue';
 
-const date = ref(moment().startOf('jDay').valueOf());
+const date = ref(moment().startOf('jDay').unix());
 
 const selectedTime = value => (date.value = value);
 </script>
@@ -14,7 +14,7 @@ const selectedTime = value => (date.value = value);
     <div class="side-bar">
         <miniProfile />
         <TheCalender @select="selectedTime" />
-        <!-- <CurrentEvents class="side-bar____activity-list" :date="date" /> -->
+        <CurrentEvents class="side-bar____activity-list" :date="date" />
     </div>
 </template>
 

@@ -9,16 +9,15 @@ const router = createRouter({
 });
 
 router.beforeEach(to => {
-    const { cookies } = useCookies();
-    const isAuthenticated = cookies.isKey('token');
-
-    if (to.meta.needAuthenticated && !isAuthenticated) {
-        toast.error('اجازه دسترسی به این مسیر وجود ندارد');
-        return { name: 'login' };
-    }
-    if (!to.meta.needAuthenticated && isAuthenticated) {
-        return { name: 'Home' };
-    }
+    // const { cookies } = useCookies();
+    // const isAuthenticated = cookies.isKey('habticToken');
+    // if (to.meta.needAuthenticated && !isAuthenticated) {
+    //     toast.error('اجازه دسترسی به این مسیر وجود ندارد');
+    //     return { name: 'login' };
+    // }
+    // if (!to.meta.needAuthenticated && isAuthenticated) {
+    //     return { name: 'Home' };
+    // }
 });
 
 router.afterEach(to => {

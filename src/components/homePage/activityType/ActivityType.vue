@@ -22,7 +22,9 @@ const { activityTypes } = storeToRefs(activityTypeStore());
     margin-bottom: 16px;
 }
 .list {
-    @include mixins.flex(space-between, center, 20px);
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 8px;
     &__card {
         min-height: 110px;
 

@@ -61,7 +61,13 @@ const submitRemove = () => {
                 </div>
             </div>
         </div>
-        <div class="card__description"></div>
+        <div class="card__des">
+            <img
+                :src="`src/assets/images/acty/${data.title}.png`"
+                style="width: 50px; margin: 0 auto"
+                alt=""
+            />
+        </div>
     </div>
     <div v-if="menuShown" class="overlay" @click="menuShown = false"></div>
 
@@ -87,6 +93,11 @@ const submitRemove = () => {
     max-height: 480px;
     &__description {
         height: 100px;
+    }
+    &__des {
+        display: flex;
+        justify-items: center;
+        align-items: center;
     }
 }
 </style>

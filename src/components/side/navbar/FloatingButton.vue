@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import BaseIcon from '@base/BaseIcon.vue';
 import FormAction from '@/components/modals/FormAction.vue';
 import ActivityTypeForm from '../../modals/ActivityTypeForm.vue';
+import Activity from '../../homePage/activity/Activity';
+import ActivityType from '../../homePage/activityType/ActivityType';
 
 const floatingButtonModal = ref(false);
 const activityModal = ref(false);
@@ -13,27 +15,30 @@ const closeFloatingButton = () => {
     activityModal.value = false;
     activityTypeModal.value = false;
 };
-const open = () => {
-    activityModal.value = true;
-};
+
+const addActivity = values => {
+    Activity.addActivity(values)
+    closeFloatingButton()
+}
+
+const addActivityType = values => {
+    ActivityType.add(values)
+    closeFloatingButton()
+}
 </script>
 
 <template>
-    <BaseIcon
-        path="homeIcon/iconAdd.vue"
-        class="plus"
-        :class="{ 'plus--rotate': floatingButtonModal }"
-        @click="floatingButtonModal = true"
-    />
+    <BaseIcon path="homeIcon/iconAdd.vue" class="plus" :class="{ 'plus--rotate': floatingButtonModal }"
+        @click="floatingButtonModal = true" />
     <div v-if="floatingButtonModal" class="floating-button" @click.self="closeFloatingButton">
         <div class="floating-button__activity">
-            <div class="floating-button__icon" @click.stop="open()">
+            <div class="floating-button__icon" @click.stop="activityModal = true">
                 <BaseIcon :path="`floatingIcons/iconActivityActive.vue`" />
             </div>
 
             <h4 class="floating-button__title">فعالیت</h4>
         </div>
-        <div :class="`floating-button__activityType`">
+        <div class="floating-button__activityType">
             <div class="floating-button__icon" @click.stop="activityTypeModal = true">
                 <BaseIcon :path="`floatingIcons/iconActivityTypeActive.vue`" />
             </div>
@@ -41,18 +46,15 @@ const open = () => {
             <h4 class="floating-button__title">نوغ فعالیت</h4>
         </div>
     </div>
-    <FormAction v-if="activityModal" @close="closeFloatingButton" @submit="closeFloatingButton" />
+    <FormAction v-if="activityModal" @close="closeFloatingButton" @submit="addActivity" />
 
-    <ActivityTypeForm
-        v-if="activityTypeModal"
-        @close="closeFloatingButton"
-        @submit="closeFloatingButton"
-    />
+    <ActivityTypeForm v-if="activityTypeModal" @close="closeFloatingButton" @submit="addActivityType" />
 </template>
 
 <style scoped lang="scss">
 .plus {
     transition: all 0.25s ease-in;
+
     &--rotate {
         transform: rotate(135deg);
     }
@@ -63,6 +65,7 @@ const open = () => {
         border-radius: 50%;
     }
 }
+
 .floating-button {
     @include mixins.fix-position(0, 0);
     min-width: 100%;
@@ -74,12 +77,15 @@ const open = () => {
 
     &__activity {
         @include mixins.absolute($right: 157px, $bottom: 145px);
+
         @include mixins.screen(med) {
             @include mixins.absolute($right: 75%, $bottom: 50px);
         }
     }
+
     &__activityType {
         @include mixins.absolute($right: 228px, $bottom: 34px);
+
         @include mixins.screen(med) {
             @include mixins.absolute($right: 50%, $bottom: 150px);
         }
@@ -112,10 +118,12 @@ const open = () => {
         }
     }
 }
+
 @keyframes active {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }

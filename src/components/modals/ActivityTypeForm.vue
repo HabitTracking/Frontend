@@ -19,7 +19,6 @@ configure({
 });
 
 const onSubmit = values => {
-    console.log(values);
     ActivityType.add(values);
     emits('submit');
 };

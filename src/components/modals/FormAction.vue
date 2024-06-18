@@ -5,10 +5,9 @@ import { Form as ValidationForm, configure } from 'vee-validate';
 import DatePicker from '../modals/DatePicker.vue';
 import { schemaActivity } from '@/plugins/yup';
 import { activityForm as data } from '@/common/constants/forms';
-import Activity from '../homePage/activity/Activity';
-import FilterActivityType from './FilterActivityType.vue';
-import { ref } from 'vue';
-import { activityTypeStore } from '@/stores/activityTypeStore';
+// import FilterActivityType from './FilterActivityType.vue';
+import { activityTypeStore } from '../../stores/activityTypeStore';
+import { storeToRefs } from 'pinia';
 
 const emits = defineEmits(['close', 'submit']);
 
@@ -21,18 +20,11 @@ defineProps({
 configure({
     validateOnInput: true
 });
-const store = activityTypeStore();
+
+const { activityTypes } = storeToRefs(activityTypeStore())
 
 const onSubmit = values => {
-    emits('submit');
-    Activity.addActivity(values);
-    store.selectedActivitytype = '';
-};
-
-const showFilterActivityType = ref(false);
-
-const submitFilteractivityType = activityTypes => {
-    showFilterActivityType.value = false;
+    emits('submit', values);
 };
 </script>
 
@@ -42,43 +34,34 @@ const submitFilteractivityType = activityTypes => {
             <div class="form">
                 <base-input v-for="(input, index) in data.inputs" :key="index" :data="input" />
 
-                <date-picker
-                    :dataInput="data.time?.date"
-                    type="datetime"
-                    format="jD jMMMM jYYYY  HH:mm"
-                />
+                <date-picker :dataInput="data.time?.date" type="datetime" format="jD jMMMM jYYYY  HH:mm" />
 
                 <div class="form__time">
                     <base-input :data="data?.frequency" :selections="data.frequency.options" />
 
-                    <date-picker
-                        :dataInput="data.time?.dueDate"
-                        type="date"
-                        format="jD jMMMM jYYYY"
-                    />
+                    <date-picker :dataInput="data.time?.dueDate" type="date" format="jD jMMMM jYYYY" />
                 </div>
                 <div class="form__time">
                     <base-input :data="data?.target" />
                     <base-input :data="data?.unit" />
                 </div>
 
-                <div @click="showFilterActivityType = true">
-                    <base-input :data="data?.activityType" />
-                </div>
+                <base-input :data="data?.activityType"
+                    :selections="activityTypes.reduce((a, c) => [...a, { name: c.title, value: c.id }], [])" />
             </div>
-            <!-- <color-picker v-model:pureColor="pureColor" /> -->
         </base-modal>
-        <FilterActivityType
+        <!-- <FilterActivityType
             v-if="showFilterActivityType"
             @close="showFilterActivityType = false"
             @submit="submitFilteractivityType"
-        />
+        /> -->
     </validation-form>
 </template>
 
 <style scoped lang="scss">
 .form {
     padding-bottom: 20px;
+
     &__time {
         @include mixins.flex($gap: 8px);
     }

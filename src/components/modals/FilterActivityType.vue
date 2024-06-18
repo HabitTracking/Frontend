@@ -14,11 +14,11 @@ const { value: inputValue } = useField('activityType');
 const store = activityTypeStore();
 
 const selectActivityType = activityType => {
-    selected.value = activityType;
+    selected.value = activityType
 };
 
 const onSubmit = () => {
-    inputValue.value = selected.value;
+    inputValue.value = selected.value.title;
     emits('submit', selected.value);
 };
 </script>
@@ -27,10 +27,10 @@ const onSubmit = () => {
     <base-modal @submit="onSubmit" :title="data?.title" :button="data?.button" class="modal">
         <div class="modal__list">
             <BaseTag
-                v-for="(activityType, index) in store.titleActivityTypes"
+                v-for="(activityType, index) in store.activityTypes"
                 :key="index"
-                :text="activityType"
-                :is-active="activityType == selected"
+                :text="activityType.title"
+                :is-active="activityType.title == selected?.title"
                 @click="selectActivityType(activityType)"
             />
         </div>

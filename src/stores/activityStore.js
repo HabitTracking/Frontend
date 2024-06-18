@@ -9,13 +9,12 @@ export const activityStore = defineStore('activity', {
         async getActivity() {
             this.activities = await Activity.getActivity();
         },
-        addActivity(values) {
-            this.activities?.push(values);
+        addActivity(activity) {
+            this.activities?.push(activity);
         },
-        editActivity(values) {
-            this.activities = this.activities?.map(activity =>
-                values?._id === activity.id ? new Activity(values) : activity
-            );
+        editActivity(activity, id) {
+            this.deleteActivity(id);
+            this.addActivity(activity);
         },
         deleteActivity(id) {
             this.activities = this.activities?.filter(activity => activity.id !== id);

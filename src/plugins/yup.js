@@ -22,7 +22,9 @@ export const schemaSignup = Yup.object().shape({
 
 export const schemaActivity = Yup.object().shape({
     title: Yup.string().required('عنوان را وارد کنید'),
-    target: Yup.string().required('نام هدف را وارد کنید'),
+    target: Yup.string()
+        .required('هدف را وارد کنید')
+        .matches(/[0-9]+/, 'هدف باید عدد باشد'),
     unit: Yup.string().required('واحد هدف را وارد کنید'),
     note: Yup.string().required('توضیحات را وارد کنید'),
     date: Yup.string().required('زمان شروع را وارد کنید'),

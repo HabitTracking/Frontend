@@ -13,6 +13,12 @@ export const activityTypeStore = defineStore('activityType', {
             this.titleActivityTypes = this.activityTypes?.map(
                 activityType => activityType.getData().title
             );
+        },
+        addActivityType(values) {
+            this.activityTypes?.push(values);
+            this.titleActivityTypes = this.activityTypes?.map(
+                activityType => activityType.getData().title
+            );
         }
     }
 });

@@ -2,7 +2,6 @@ import moment from 'jalali-moment';
 import { activityStore } from '@/stores/activityStore';
 import { activityTypeStore } from '../../../stores/activityTypeStore';
 import { storeToRefs } from 'pinia';
-import { useCookies } from 'vue3-cookies';
 import {
     postActivity as postRequest,
     deleteActivity as deleteRequest,
@@ -10,8 +9,6 @@ import {
     getActivity as getRequest,
     postProgress
 } from '@/services/activityService';
-
-const { cookies } = useCookies();
 
 export default class Activity {
     static schema = {
@@ -30,14 +27,15 @@ export default class Activity {
         this.target = data.targetAmount;
         this.unit = data.targetUnit;
         this.frequency = data.frequency;
+        this.progreses = data.progress;
     }
 
     getData() {
         return {
             title: this.title,
             note: this.description,
-            date: this.getDateFormated(this.date),
-            dueDate: this.getDateFormated(this.dueDate),
+            date: this.getDateFormated(Number(this.date) * 1000, 'jD jMMMM jYYYY  HH:mm'),
+            dueDate: this.getDateFormated(Number(this.dueDate) * 1000, 'jD jMMMM jYYYY'),
             target: this.target,
             unit: this.unit,
             activityType: this.activityType,
@@ -53,8 +51,8 @@ export default class Activity {
         });
     }
 
-    getDateFormated(date) {
-        return moment(+date).format('jD jMMMM jYYYY');
+    getDateFormated(date, format = 'jD jMMMM jYYYY') {
+        return moment(+date).format(format);
     }
 
     getFrequency() {
@@ -82,18 +80,15 @@ export default class Activity {
         }).format(moment(+this.date * 1000));
     }
     getDueDate() {
-        if (isNaN(+this.date)) return 'invalid date';
+        if (isNaN(+this.dueDate)) return 'invalid date';
         return new Intl.DateTimeFormat('fa-IR', {
             day: 'numeric',
             month: 'short'
         }).format(moment(+this.dueDate * 1000));
     }
     getTime() {
-        if (+this.startTime) return 'invalid time';
-        return new Intl.DateTimeFormat('fa-IR', {
-            hour: 'numeric',
-            minute: 'numeric'
-        }).format(moment(+this.date * 1000, 'HH:mm'));
+        if (+this.data) return 'invalid time';
+        return moment(+this.date * 1000).format('HH:mm');
     }
 
     getActivityType() {
@@ -131,22 +126,25 @@ export default class Activity {
 
     async editActivity(data) {
         const body = {
-            title: data.title,
-            date: Activity.toTimeStamp(data.date),
-            startTime: data.startTime,
-            endTime: data.endTime,
-            description: data.description,
+            name: data.title,
+            startTime: Activity.toTimeStamp(data.date, 'jD jMMMM jYYYY  HH:mm'),
+            dueDate: Activity.toTimeStamp(data.dueDate, 'jD jMMMM jYYYY'),
+            frequency: +data.frequency,
+            note: data.note,
             activityType: data.activityType,
-            picture: await Activity.getIdPicture(data.images)
+            targetAmount: +data.target,
+            targetUnit: data.unit
         };
-        const editedActivity = await putRequest(body);
+        await putRequest(body, this.id);
 
-        const { editActivity } = activityStore();
-        editActivity(editedActivity);
+        const { editActivity: edit } = activityStore();
+
+        const activity = new Activity({ ...body, _id: this.id });
+        edit(activity, this.id);
     }
 
     deleteActivity() {
-        deleteRequest({ id: this.id });
+        deleteRequest({ activityId: this.id });
         const { deleteActivity } = activityStore();
         deleteActivity(this.id);
     }

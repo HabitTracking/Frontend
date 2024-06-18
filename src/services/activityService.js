@@ -1,5 +1,4 @@
 import { toast } from '@/plugins/toast';
-
 import instance from '@/plugins/axios';
 
 export const getActivity = async () => {
@@ -36,9 +35,35 @@ export const postProgress = async body => {
     }
 };
 
-export const editActivity = async body => {
+export const getcalendar = async param => {
     try {
-        const editedActivity = await instance.put('/activity', body);
+        const responseActivity = await instance.get('/calendar/month', {
+            params: {
+                date: param
+            }
+        });
+        return responseActivity.additionalInfo;
+    } catch (error) {}
+};
+
+export const getcalendarDay = async day => {
+    try {
+        const responseActivity = await instance.get('/calendar/day', {
+            params: {
+                date: day
+            }
+        });
+        return responseActivity.additionalInfo;
+    } catch (error) {}
+};
+
+export const editActivity = async (body, id) => {
+    try {
+        const editedActivity = await instance.put('/activity', body, {
+            params: {
+                activityId: id
+            }
+        });
         toast.success('فعالیت با موفقیت ویرایش شد');
         return editedActivity.data;
     } catch (error) {

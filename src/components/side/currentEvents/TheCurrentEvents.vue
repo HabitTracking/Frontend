@@ -1,34 +1,48 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, watch, ref } from 'vue';
 import CurrentEventCard from './CurrentEventCard.vue';
-import { activityStore } from '@/stores/activityStore';
-import { storeToRefs } from 'pinia';
+import { getcalendarDay } from '../../../services/activityService'
+import Activity from '../../homePage/activity/Activity';
+import moment from 'jalali-moment';
 
 const props = defineProps({
     date: {
         type: Number
     }
-});
+})
 
-const { events } = storeToRefs(activityStore());
+const activityList = ref([]);
 
-const toPersianDate = computed(() =>
-    new Intl.DateTimeFormat('fa-IR', {
-        day: 'numeric',
-        month: 'short'
-    }).format(props.date)
-);
 
-const eventList = computed(() => events.value?.filter(({ date }) => date == props?.date));
+watch(() => props.date,
+    async () => {
+        activityList.value = await getcalendarDay(props.date)
+    }, {
+    immediate: true
+})
+
+
 </script>
 
 <template>
     <div class="content">
         <div class="content__header">
-            <h6 class="content__title"><span> فعالیت های </span> {{ toPersianDate }}</h6>
+            <h6 class="content__title"><span> فعالیت های </span> {{ moment(date * 1000).format('jD jMMMM') }}</h6>
         </div>
         <div class="content__list">
-            <CurrentEventCard v-for="(event, index) in eventList" :key="index" :data="event" />
+            <template v-for="(activity, index) in activityList" :key="index">
+                <CurrentEventCard :data="new Activity(activity)" />
+            </template>
         </div>
     </div>
 </template>
+<style scoped lang="scss">
+.content {
+    width: 100%;
+
+    &__title {
+        text-align: center;
+        margin-bottom: 12px;
+    }
+}
+</style>

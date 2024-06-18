@@ -2,7 +2,7 @@ import {
     postActivityType as post,
     getActivityType as get
 } from '../../../services/activityTypeService';
-// import { activityTypeStore } from '@/stores/activityTypeStore';
+import { activityTypeStore } from '@/stores/activityTypeStore';
 
 export default class ActivityType {
     constructor(data) {
@@ -23,5 +23,10 @@ export default class ActivityType {
     }
     static async add(data) {
         const res = await post(data);
+
+        const newBody = { ...data, _id: res.additionalInfo.activityTypeId };
+
+        const { addActivityType } = activityTypeStore();
+        addActivityType(new ActivityType(newBody));
     }
 }
