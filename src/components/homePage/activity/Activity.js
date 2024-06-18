@@ -1,5 +1,7 @@
 import moment from 'jalali-moment';
 import { activityStore } from '@/stores/activityStore';
+import { activityTypeStore } from '../../../stores/activityTypeStore';
+import { storeToRefs } from 'pinia';
 import { useCookies } from 'vue3-cookies';
 import {
     postActivity as postRequest,
@@ -77,25 +79,30 @@ export default class Activity {
         return new Intl.DateTimeFormat('fa-IR', {
             day: 'numeric',
             month: 'short'
-        }).format(moment(+this.date));
+        }).format(moment(+this.date * 1000));
     }
     getDueDate() {
         if (isNaN(+this.date)) return 'invalid date';
         return new Intl.DateTimeFormat('fa-IR', {
             day: 'numeric',
             month: 'short'
-        }).format(moment(+this.dueDate));
+        }).format(moment(+this.dueDate * 1000));
     }
     getTime() {
         if (+this.startTime) return 'invalid time';
         return new Intl.DateTimeFormat('fa-IR', {
             hour: 'numeric',
             minute: 'numeric'
-        }).format(moment(this.date, 'HH:mm'));
+        }).format(moment(+this.date * 1000, 'HH:mm'));
+    }
+
+    getActivityType() {
+        const { activityTypes } = storeToRefs(activityTypeStore());
+        return activityTypes.value.filter(v => v.id == this.activityType)[0]?.title;
     }
 
     static toTimeStamp(date, format) {
-        return '' + moment(date, format).valueOf();
+        return '' + moment(date, format).unix();
     }
 
     static async addActivity(data) {

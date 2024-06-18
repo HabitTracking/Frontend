@@ -104,7 +104,6 @@ const createInfo = {
         name: 'activityType',
         label: 'نوع فعالیت',
         type: 'text',
-        disabled: true,
         headingIcon: 'iconActivityType'
     }
 };
@@ -161,7 +160,7 @@ export const activityForm = {
     },
     target: createInfo.target,
     unit: createInfo.unit,
-    activityType: createInfo.activityType,
+    activityType: { ...createInfo.activityType, type: 'select' },
     button: button
 };
 

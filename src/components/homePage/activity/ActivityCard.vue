@@ -92,7 +92,7 @@ const formInput = { name: 'amount', type: 'text', label: 'مقدار هدف', he
             </div>
         </div>
         <div class="card__tags">
-            <BaseTag class="card__tag" :text="data.activityType" is-active theme="red" />
+            <BaseTag class="card__tag" :text="data.getActivityType()" is-active theme="red" />
             <BaseTag class="card__tag" :text="data.getTag()" is-active theme="violet" />
             <BaseTag
                 class="card__tag"
@@ -101,6 +101,9 @@ const formInput = { name: 'amount', type: 'text', label: 'مقدار هدف', he
                 theme="blue"
                 @click="openProgress()"
             />
+        </div>
+        <div class="">
+            <div class="progressbar"></div>
         </div>
     </div>
     <div v-if="menuShown" class="overlay" @click="menuShown = false"></div>
@@ -147,7 +150,13 @@ const formInput = { name: 'amount', type: 'text', label: 'مقدار هدف', he
         height: 100px;
     }
     &__tags {
-        @include mixins.flex(flex-start, center, 8px);
+        @include mixins.flex(flex-start, center, 8px,row,wrap);
+        row-gap: 0px;
+    }
+    &.progressbar {
+        width: 150px;
+        height: 20px;
+        border: 1px solid #2f7bf5;
     }
 }
 </style>
